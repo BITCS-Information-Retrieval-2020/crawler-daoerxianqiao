@@ -2,7 +2,7 @@
 
 <div style="text-align: center;">
 
-![avatar](.\extra\logo.jpg)
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/logo.jpg)
 
 </div>
 
@@ -53,13 +53,13 @@
 
 姓名 | 学号 | 分工 |
 :-: | :-: | :-: |
-[@姜景虎]((https://github.com/Jiangjinghu)) | 3120201032 | CrossMinds、ACL Anthology |
-[@郑洪超]((https://github.com/)) | 3220201025 |数据库和CrossMinds:基本信息、视频、PDF |
-[@杨俊]((https://github.com/)) | 3120201087 | 数据库和CrossMinds:基本信息、视频、PDF |
-[@寇桓锦]((https://github.com/)) | 3220200896 | CrossMinds:基本信息、视频、PDF |
-[@朱牛牛]((https://github.com/)) | 3120201113 | ACL Anthology:基本信息、视频、PDF |
-[@张鑫]((https://github.com/)) | 3220201014 |ACL Anthology:基本信息、视频、PDF  |
-[@周长智]((https://github.com/)) | 3120201101 | ACL Anthology:基本信息、视频、PDF |
+[@姜景虎](https://github.com/Jiangjinghu) | 3120201032 | CrossMinds、ACL Anthology |
+[@郑洪超](https://github.com/) | 3220201025 |数据库和CrossMinds:基本信息、视频、PDF |
+[@杨俊](https://github.com/) | 3120201087 | 数据库和CrossMinds:基本信息、视频、PDF |
+[@寇桓锦](https://github.com/) | 3220200896 | CrossMinds:基本信息、视频、PDF |
+[@朱牛牛](https://github.com/) | 3120201113 | ACL Anthology:基本信息、视频、PDF |
+[@张鑫](https://github.com/) | 3220201014 |ACL Anthology:基本信息、视频、PDF  |
+[@周长智](https://github.com/) | 3120201101 | ACL Anthology:基本信息、视频、PDF |
 
 ## 特别致谢
 - 感谢**姜景虎**、**王文煊**与**杨俊**的校园网流量
@@ -368,7 +368,7 @@ Source_path| 字符串数组 | 源码的本地路径 |
 
 corssmind里视频主要有两种分类方式：按照Category（比如会议等）或按照Knowledge Area。因为前者类数更新要比后者快，所以我们选择根据第二种方式进行遍历。
 
-![avatar](.\extra\pic1.png)
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/pic1.png)
 
 根据api爬取视频基本信息：
 
