@@ -9,8 +9,12 @@
 
 本项目属于总项目中的爬虫模块，提供一个MongoDB数据库和磁盘文件。
 
+<center>
 
-![avatar](https://img.shields.io/badge/flake8-%E9%80%9A%E8%BF%87-green)   ![avatar](https://img.shields.io/badge/%E4%BA%8C%E4%BB%99%E6%A1%A5-%E5%88%B0%E8%BE%BE-red)  ![avatar](https://img.shields.io/badge/%E6%88%90%E5%8D%8E%E5%A4%A7%E9%81%93-%E5%88%B0%E8%BE%BE-red)
+
+![](https://img.shields.io/badge/flake8-%E9%80%9A%E8%BF%87-green)   ![](https://img.shields.io/badge/%E4%BA%8C%E4%BB%99%E6%A1%A5-%E5%88%B0%E8%BE%BE-red)  ![](https://img.shields.io/badge/%E6%88%90%E5%8D%8E%E5%A4%A7%E9%81%93-%E5%88%B0%E8%BE%BE-red)
+
+</center>
 
 
     “你这爬虫能爬吗？”
