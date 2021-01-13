@@ -1,20 +1,17 @@
 # crawler-daoerxianqiao
 
-<div style="text-align: center;">
-
 ![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/logo.jpg)
 
-</div>
 
 ## 项目介绍
 
 总项目为搭建一个学术论文的综合搜索引擎，用户可以检索到一篇论文的综合信息，不仅有pdf文件，还有oral视频，数据集，源代码等多模态信息。
 
 本项目属于总项目中的爬虫模块，提供一个MongoDB数据库和磁盘文件。
-<center>
+
 
 ![](https://img.shields.io/badge/flake8-%E9%80%9A%E8%BF%87-green)   ![](https://img.shields.io/badge/%E4%BA%8C%E4%BB%99%E6%A1%A5-%E5%88%B0%E8%BE%BE-red)  ![](https://img.shields.io/badge/%E6%88%90%E5%8D%8E%E5%A4%A7%E9%81%93-%E5%88%B0%E8%BE%BE-red)
-</center>
+
 
     “你这爬虫能爬吗？”
     “能爬，只能爬亿点点。”
@@ -22,31 +19,34 @@
 
 ## 目录
 
-- [小组分工](#到二仙桥(daoerxianqiao)小组分工)
-- [特别致谢](#特别致谢)
-- [爬取数据](#爬取数据)
-  - [统计信息](#统计信息)
-  - [字段说明](#字段说明)
-    - [Corssmind中视频基本信息](#Corssmind中视频基本信息)
-    - [Corssmind中评论信息](#Corssmind中评论信息)
-    - [Corssmind中reaction信息](#Corssmind中reaction信息)
-    - [ACL Anthology基本信息](#ACL_Anthology基本信息)
-- [爬虫模块](#爬虫模块)
-  - [Corssmind](#Crossmind)
-    - [视频基本信息](#视频基本信息)
-    - [评论信息](#评论信息)
-    - [reaction信息](#reaction信息)
-    - [PDF文件爬取](#PDF文件爬取)
-    - [视频文件爬取](#视频文件爬取)
-      - [Youtube](#Youtube)
-      - [CrossMinds(m3u8)](#CrossMinds_m3u8)
-      - [Vimeo](#Vimeo)
-  - [ACL Anthology](#ACL_Anthology)
-    - [基本信息](#基本信息)
-    - [PDF、Dataset、Source等](#PDF、Dataset、Source等)
-    - [幻灯片](#幻灯片)
-    - [Vimeo](#Vimeo)
-- [特别说明](#特别说明)
+- [crawler-daoerxianqiao](#crawler-daoerxianqiao)
+  - [项目介绍](#项目介绍)
+  - [目录](#目录)
+  - [到二仙桥(daoerxianqiao)小组分工](#到二仙桥daoerxianqiao小组分工)
+  - [特别致谢](#特别致谢)
+  - [爬取数据](#爬取数据)
+    - [统计信息（截至到 2021年01月06日）](#统计信息截至到-2021年01月06日)
+    - [字段说明](#字段说明)
+      - [Corssmind中视频基本信息](#corssmind中视频基本信息)
+      - [Corssmind中评论信息](#corssmind中评论信息)
+      - [Corssmind中reaction信息](#corssmind中reaction信息)
+      - [ACL_Anthology基本信息](#acl_anthology基本信息)
+  - [爬虫模块](#爬虫模块)
+    - [Crossmind](#crossmind)
+      - [视频基本信息](#视频基本信息)
+      - [评论信息](#评论信息)
+      - [reaction信息](#reaction信息)
+      - [PDF文件爬取](#pdf文件爬取)
+      - [视频文件爬取](#视频文件爬取)
+        - [Youtube](#youtube)
+        - [CrossMinds_m3u8](#crossminds_m3u8)
+        - [Vimeo](#vimeo)
+    - [ACL_Anthology](#acl_anthology)
+      - [基本信息](#基本信息)
+      - [PDF、Dataset、Source等](#pdfdatasetsource等)
+      - [幻灯片](#幻灯片)
+      - [Vimeo](#vimeo-1)
+  - [特别说明](#特别说明)
 
 
 ## 到二仙桥(daoerxianqiao)小组分工
