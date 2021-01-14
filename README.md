@@ -2,20 +2,13 @@
 
 ![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/logo.jpg)
 
-
 ## 项目介绍
 
 总项目为搭建一个学术论文的综合搜索引擎，用户可以检索到一篇论文的综合信息，不仅有pdf文件，还有oral视频，数据集，源代码等多模态信息。
 
-本项目属于总项目中的爬虫模块，提供一个MongoDB数据库和磁盘文件。
+本项目属于总项目中的爬虫模块
 
-<center>
-
-
-![](https://img.shields.io/badge/flake8-%E9%80%9A%E8%BF%87-green)   ![](https://img.shields.io/badge/%E4%BA%8C%E4%BB%99%E6%A1%A5-%E5%88%B0%E8%BE%BE-red)  ![](https://img.shields.io/badge/%E6%88%90%E5%8D%8E%E5%A4%A7%E9%81%93-%E5%88%B0%E8%BE%BE-red)
-
-</center>
-
+![](https://img.shields.io/badge/flake8-%E9%80%9A%E8%BF%87-green) ![](https://img.shields.io/badge/%E4%BA%8C%E4%BB%99%E6%A1%A5-%E5%88%B0%E8%BE%BE-red) ![](https://img.shields.io/badge/%E6%88%90%E5%8D%8E%E5%A4%A7%E9%81%93-%E5%88%B0%E8%BE%BE-red)
 
     “你这爬虫能爬吗？”
     “能爬，只能爬亿点点。”
@@ -36,6 +29,8 @@
       - [Corssmind中reaction信息](#corssmind中reaction信息)
       - [ACL_Anthology基本信息](#acl_anthology基本信息)
   - [爬虫模块](#爬虫模块)
+    - [代码目录结构](#代码目录结构)
+    - [开发框架和工具](#开发框架和工具)
     - [Crossmind](#crossmind)
       - [视频基本信息](#视频基本信息)
       - [评论信息](#评论信息)
@@ -51,7 +46,6 @@
       - [幻灯片](#幻灯片)
       - [Vimeo](#vimeo-1)
   - [特别说明](#特别说明)
-
 
 ## 到二仙桥(daoerxianqiao)小组分工
 
@@ -71,7 +65,7 @@
 
 ## 爬取数据
 
-主要爬取了两个网站的数据：
+主要爬取了两个网站的数据，并存储到MongoDB数据以及下载到本地：
 
 - CrossMinds：[https://crossminds.ai](https://crossminds.ai)（含视频、介绍文字、代码链接等）
   
@@ -359,22 +353,63 @@ Source_path| 字符串数组 | 源码的本地路径 |
 
 ## 爬虫模块
 
-- 开发语言：python3.6
-- 爬虫框架： **Scrapy**
+### 代码目录结构
+
+- Readme.md                   // 说明文档
+  - ErQiaoCrawler
+    - spiders
+      - crossmind.py            // 用于CorssMinds网站的爬虫脚本
+      - acl_anthology.py        // 用于ACL网站的爬虫脚本
+    - pipelines.py               // 持久化脚本，存储MongoDB
+    - anthology.bib              //ACL网站全部文章的bib
+
+### 开发框架和工具
+
+- 开发语言：**python 3.6**
+- 爬虫框架： **Scrapy 2.4.1**
+- 数据库工具 **pymongo 3.11.2**
+- Youtube下载工具 **pytube 10.0.0**
 - 系统： Windows
 - IDE： VS Code
 
 ### Crossmind
 
+    $ cd ./ErQiaoCrawler
     $ scrapy crawl crossmind
-
-#### 视频基本信息
-
-corssmind里视频主要有两种分类方式：按照Category（比如会议等）或按照Knowledge Area。因为前者类数更新要比后者快，所以我们选择根据第二种方式进行遍历。
 
 ![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/pic1.png)
 
+#### 视频基本信息
+
+corssmind里视频主要有两种分类方式：按照Category（比如会议等）或按照Knowledge Area。
+
+<details>
+<summary>按照Category
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/crossmind_category.png)
+
+</details>
+
+<details>
+<summary>按照Knowledge Area
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/crossmind_knowledgearea.png)
+
+</details>  
+
+因为前者类数更新要比后者快，所以我们选择根据第二种方式进行遍历。
+
 根据api爬取视频基本信息：
+
+<details>
+<summary>视频基本信息
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/crossmind_info.png)
+
+</details>  
 
     https://api.crossminds.io/web/node/video/name/[1]?limit=[2]&offset=[3]
 
@@ -382,11 +417,19 @@ corssmind里视频主要有两种分类方式：按照Category（比如会议等
 - [2] 返回结果数
 - [3] 偏移数
   
-通过设置这些参数，迭代爬取视频基础信息，包括视频唯一标识foregin_id。随即yield item，并且对foreign_id建立索引，防止重复插入。
+通过设置这些参数，迭代爬取视频基础信息，包括视频唯一标识foregin_id。随即yield item，存入MongoBD，并且对foreign_id建立索引，防止重复插入。
 
 #### 评论信息
 
 根据api爬取视频的评论信息：
+
+<details>
+<summary>视频的评论
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/crossmind_comment.png)
+
+</details>  
 
     https://activity.crossminds.io/comment/target?target_id=[1]&offset=[2]&limit=[3]&target_type=video
 
@@ -400,6 +443,14 @@ corssmind里视频主要有两种分类方式：按照Category（比如会议等
 
 根据api爬取视频的reaction信息：
 
+<details>
+<summary>视频Reaction信息
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/crossmind_reaction.png)
+
+</details>  
+
     https://api.crossminds.io/web/reactive/comment/[1]
 
 - [1] 视频唯一标识
@@ -408,7 +459,16 @@ corssmind里视频主要有两种分类方式：按照Category（比如会议等
 
 #### PDF文件爬取
 
-在基本信息中，attachment字段中有pdf等信息，这里只把pdf下载到本地中。
+在基本信息中，attachment字段中有pdf等信息，这里只把pdf和视频下载到本地中。
+<details>
+<summary>附件信息
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/crossmind_attachment.png)
+
+</details>  
+
+Parper Link中链接不一定是pdf，有些需要进行处理。这里只处理了一些常见的链接，并且把没有进行下载的链接存到了miss.txt中，方便后续进行进一步处理。
 
 <details>
 
@@ -460,7 +520,7 @@ corssmind里视频主要有两种分类方式：按照Category（比如会议等
 
 ##### CrossMinds_m3u8
 
-首先下载m3u8文件，解析出来对应的ts文件列表，逐个下载后，合并成mp4文件。
+首先下载m3u8文件，解析出来对应的ts文件列表，逐个下载后，合并成完整mp4文件（这里ts文件没有删除）。
 
 <details>
 
@@ -509,7 +569,7 @@ corssmind里视频主要有两种分类方式：按照Category（比如会议等
 
 ##### Vimeo
 
-vimeo视频有唯一标识vimeo_id，根据下面的api找到其相关信息，主要有两个重要字段"hls"和"progressive"，前者是m3u8，后者有不同质量的mp4下载链接。我们使用后者下载视频（并选择最低清晰度。。。流量有限）。
+vimeo视频有唯一标识vimeo_id，根据下面的api找到其相关信息，主要有两个重要字段"hls"和"progressive"，前者是m3u8格式，后者有不同质量的mp4下载链接。我们使用后者下载视频（并选择最低清晰度。。。流量有限）。
 
         https://player.vimeo.com/video/[1]/config?autopause=1&byline=0\
                             &collections=1&context=Vimeo%5CController%5CClipController.main&default_to_hd=1\
@@ -517,16 +577,74 @@ vimeo视频有唯一标识vimeo_id，根据下面的api找到其相关信息，�
 
 - [1] vimeo视频唯一标识vimeo_id
 
+<details>
+
+
+```python
+    def parse_vimeo(self, response):
+        res_dict = json.loads(response.text)['request']['files']['progressive']
+        # 选清晰度最低的 流量不够
+        height = 1080
+        video_url = ''
+        for res in res_dict:
+            if height > res['height']:
+                height = res['height']
+                video_url = res['url']
+        yield scrapy.Request(video_url, callback=self.parse_vimeo_download,
+                             meta={'target_id': response.meta['target_id']}, dont_filter=True)
+
+    def parse_vimeo_download(self, response):
+        if not os.path.exists(self.video_base_path + response.meta['target_id']):
+            os.makedirs(self.video_base_path + response.meta['target_id'])
+        try:
+            video_path = self.video_base_path + response.meta['target_id'] + "/" + response.meta['target_id'] + ".mp4"
+            with open(video_path, 'wb') as file:
+                file.write(response.body)
+            video_item = {}
+            video_item['target_id'] = response.meta['target_id']
+            video_item['video_path'] = video_path
+            yield video_item
+        except Exception:
+            self.logger.debug('vimeo文件下载失败' + str(response.meta['target_id']))
+            with open(self.video_base_path + 'error.txt', 'a+') as f:
+                f.write(response.url + '\n')
+```
+</details>
+
 ### ACL_Anthology
 
-       $ scrapy crawl acl_anthology
+<details>
+<summary>ACL官网
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/acl_info.png)
+
+</details>  
+
+    $ cd ./ErQiaoCrawler
+    $ scrapy crawl acl_anthology
 
 #### 基本信息
 
 ACL Anthology同样有两种遍历方法：根据页面table爬取或者网站提供的bib压缩包。因为基本是年更，所以我们选择后者，提取bib中的url遍历。
 
+<details>
+<summary>bib压缩包
+</summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/acl_bib.png)
+
+</details>  
 
 使用xpath爬取每一个页面中的文章标题、文章作者、摘要、pdf等等。唯一标识为Anthology ID，并建立索引。
+
+<details>
+<summary>acl文章信息
+ </summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/acl_xpath.png)
+
+</details> 
 
 <details>
 
@@ -547,11 +665,62 @@ ACL Anthology同样有两种遍历方法：根据页面table爬取或者网站�
 
 #### PDF、Dataset、Source等
 
-有的文章会有附件，根据url下载即可（判断是否存在，防止重复下载）。
+有的文章会有附件，根据url下载即可（判断是否存在，防止重复下载）。需要注意的是同一类附件可能有多个。
+
+<details>
+<summary>附件
+ </summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/acl_attachment.png)
+
+</details> 
+
+<details>
+
+```python
+   if len(key_selectors) != len(value_selectors):
+            self.logger.debug("出错：acl 爬取字段出错！")
+        for i in range(0, len(key_selectors)):
+            key = key_selectors[i].xpath('./text()')[0].extract()
+            if key.endswith(':'):
+                key = key[0:-1]
+            # Anthology ID , Month , Year , Address , Publisher , Pages
+            tmp1 = value_selectors[i].xpath('./text()')
+            # Volume Venue (Video Dataset Software Source )
+            tmp2 = value_selectors[i].xpath('./a/text()')
+            # Video Dataset Software Source   (多个，需要额外处理)
+            tmp3 = value_selectors[i].xpath('./a/@href')
+            if len(tmp1) == 1:
+                item[key] = tmp1[0].extract()
+            if len(tmp2) == 1:
+                if key == 'Video' or key == 'Dataset' or key == 'Software' or key == 'Source':
+                    if key not in item:
+                        item[key] = []
+                    item[key].append(tmp2[0].extract().split()[0])  # 去掉xa0字符
+                else:
+                    item[key] = tmp2[0].extract()
+            if len(tmp3) == 1:
+                if key == 'Video' or key == 'Dataset' or key == 'Software' or key == 'Source':
+                    if key + '_url' not in item:
+                        item[key + '_url'] = []
+                    item[key + '_url'].append(tmp3[0].extract())
+                else:
+                    item[key + '_url'] = tmp3[0].extract()
+```
+
+</details>
 
 #### 幻灯片
 
 对于slideslive.com上的视频，还可以爬取ppt。
+
+<details>
+<summary>ppt
+ </summary>
+
+![avatar](https://github.com/BITCS-Information-Retrieval-2020/crawler-daoerxianqiao/blob/main/extra/acl_ppt.png)
+
+</details> 
 
 根据下面api，解析xml，获取幻灯片下载链接:
 
